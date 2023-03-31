@@ -1,12 +1,18 @@
 import React, {FC} from 'react';
 import {Box, Image} from "@chakra-ui/react";
-import BellIcon from "../../common/Icons/BellIcon";
-import CloseIcon from "../../common/Icons/CloseIcon";
-import UserIcon from "../../common/Icons/UserIcon";
+import BellIcon from "../../../common/Icons/BellIcon";
+import CloseIcon from "../../../common/Icons/CloseIcon";
+import UserIcon from "../../../common/Icons/UserIcon";
+import {observer} from "mobx-react-lite";
+import {useAppStore} from "../../../../core/stores";
+import {Screens} from "../../../../constants/parseProductTemplates";
 interface Props {
-    closeApp: Function
 }
-const Header:FC<Props> = ({closeApp}) => {
+const Header:FC<Props> = () => {
+    const {setAppOpened,switchScreen} = useAppStore();
+    const closeApp = () => {
+        setAppOpened(false)
+    }
     const logo = chrome.runtime.getURL('asserts/images/UnibagLogo.png');
     return (
         <Box display='flex'
@@ -16,14 +22,14 @@ const Header:FC<Props> = ({closeApp}) => {
              background='#FFFFFF'
              borderBottom='1px solid #F2F2F2'
              height='60px'>
-            <Box>
+            <Box cursor='pointer' onClick={() => switchScreen(Screens.BASKET)}>
                 <Image src={logo} alt='logo' width='97px' display='flex' alignItems='center'/>
             </Box>
             <Box display='flex' gap='15px' alignItems='center'>
                 <Box cursor='pointer'>
                     <BellIcon/>
                 </Box>
-                <Box cursor='pointer'>
+                <Box cursor='pointer' onClick={() => switchScreen(Screens.LOGIN)}>
                     <UserIcon/>
                 </Box>
                 <Box cursor='pointer' onClick={() => closeApp()}>
@@ -34,4 +40,4 @@ const Header:FC<Props> = ({closeApp}) => {
     );
 }
 
-export default Header;
+export default observer(Header);

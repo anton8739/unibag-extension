@@ -1,5 +1,6 @@
 import React from 'react';
 import {Box, Link, Text} from "@chakra-ui/react";
+import {observer} from "mobx-react-lite";
 
 const Footer = () => {
     return (
@@ -23,4 +24,4 @@ const Footer = () => {
     );
 }
 
-export default Footer;
+export default observer(Footer);

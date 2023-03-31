@@ -1,15 +1,51 @@
 import React, {useEffect} from 'react';
 import {Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay} from "@chakra-ui/react";
-import {useState} from 'react';
-import Layout from "./components/layout/Layout";
 import BellIcon from "./components/common/Icons/BellIcon";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { observer } from 'mobx-react-lite';
+import {Screens} from "./constants/parseProductTemplates";
+import Home from './components/modules/Home/Home';
+import Login from './components/modules/Login/Login';
+import Basket from "./components/modules/Basket/Basket";
+import Registration from "./components/modules/Registration/Registration";
+import {useAppStore, useBasketStore} from "./core/stores";
+import DetectedProduct from "./components/modules/DetectedProduct/DetectedProduct";
+import {parseProduct} from "./utils/parseProduct";
+import {useTab} from "./hooks/useTab";
+import SingleProduct from "./components/modules/SingleProduct/SingleProduct";
 
 function App() {
-    const [appOpened, setAppOpened] = useState(false);
+    const {activeScreen,appOpened,setAppOpened, switchScreen} = useAppStore();
+    const {initBasket} = useBasketStore();
     const closeApp = () => {
         setAppOpened(false)
     }
+    const appScreens = {
+        [Screens.HOME] : <Home/>,
+        [Screens.LOGIN]: <Login/>,
+        [Screens.BASKET] : <Basket/>,
+        [Screens.REGISTRATION] : <Registration/>,
+        [Screens.DETECTED_PRODUCT] : <DetectedProduct/>,
+        [Screens.SINGLE_PRODUCT] : <SingleProduct/>
+    }
+    const {setDetectedProduct} = useBasketStore();
+    const {lastUrl} = useTab();
+    useEffect(() => {
+        if (lastUrl) {
+            const product = parseProduct(lastUrl)
+            setDetectedProduct(product)
+            if (product) {
+                switchScreen(Screens.DETECTED_PRODUCT)
+            } else {
+                switchScreen(Screens.BASKET)
+            }
+        }
+    }, [lastUrl,appOpened])
+    useEffect(() => {
+        const basketJSON = localStorage.getItem('basket');
+        const basket = basketJSON && JSON.parse(basketJSON);
+        initBasket(basket)
+    }, [])
     return (
         <>
             <Box display={appOpened ? "none" : "flex" } background='#FF77A0' height='45px' alignItems='center'
@@ -32,7 +68,7 @@ function App() {
                 <ModalOverlay/>
                 <ModalContent containerProps={{justifyContent: 'flex-end', paddingRight: '2rem', zIndex: 10000}}>
                     <ModalBody style={{padding: 0, borderRadius: 'unset'}}>
-                        <Layout closeApp={closeApp}/>
+                            {appScreens[activeScreen]}
                     </ModalBody>
                 </ModalContent>
             </Modal>
@@ -41,4 +77,4 @@ function App() {
     );
 }
 
-export default App;
+export default observer(App);

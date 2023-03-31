@@ -1,22 +1,25 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Box, Button, Image} from "@chakra-ui/react";
-import {useTab} from "../../../hooks/useTab";
-import {parseProduct} from "../../../utils/parseProduct";
 import {Carousel} from 'react-responsive-carousel'
+import {observer} from "mobx-react-lite";
+import {useAppStore, useBasketStore} from "../../../core/stores";
+import Layout from "../../layout/Layout/Layout";
+import OpenBasket from "../../common/OpenBasketPanel/OpenBasketPanel";
+import {Screens} from "../../../constants/parseProductTemplates";
 
 const DetectedProduct = () => {
-    const {lastUrl} = useTab();
-    const [detectedProduct, setDetectedProduct] = useState<any>(null);
-    useEffect(() => {
-        if (lastUrl) {
-            const product = parseProduct(lastUrl)
-            console.log(product)
-            setDetectedProduct(product)
-            console.log(lastUrl)
-        }
-    }, [lastUrl])
+    const {switchScreen} = useAppStore();
+    const {detectedProduct, addProductToBasket, isDetectedProductInBasket} = useBasketStore();
+    const addProduct = () => {
+        detectedProduct && addProductToBasket(detectedProduct)
+        switchScreen(Screens.BASKET)
+    }
+    const openInShop = () => {
+        window.open(detectedProduct?.link, '_blank');
+    }
     return (
-        <Box>
+        <Layout>
+            <OpenBasket/>
             {detectedProduct ? <Box display='flex' flexDirection='column'>
                     <Carousel showArrows={true} swipeable showThumbs={false}>
                         {
@@ -43,17 +46,18 @@ const DetectedProduct = () => {
                             >{detectedProduct.price}</Box>
                         </Box>
                     </Box>
-                    <Box display='flex' justifyContent='center' padding='0px 18px 0px 18px'>
-                        <Button width='100%'>В корзину</Button>
+                    <Box display='flex' justifyContent='center' padding='20px 18px 20px 18px'>
+                        {isDetectedProductInBasket ? <Button width='100%' onClick={openInShop}>В магазин</Button> :
+                            <Button width='100%' onClick={addProduct}>В корзину</Button>}
                     </Box>
                 </Box> :
                 <Box padding='18px' textAlign='center'>
                     Товар не найден на данной странице
                 </Box>
             }
-        </Box>
+        </Layout>
     )
         ;
 }
 
-export default DetectedProduct;
+export default observer(DetectedProduct);
