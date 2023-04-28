@@ -1,26 +1,19 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Box, Button, Input} from "@chakra-ui/react";
-import {Screens} from "../../../../../constants/parseProductTemplates";
-
-const LoginForm = () => {
+import InputField from "../../../../common/fields/InputField/InputField";
+import {LOGIN_FIELDS} from "../../../../../constants/formFields";
+import {LoginFormContext} from '../../../../../context'
+interface Props {
+    onSubmit: Function;
+    loading: boolean;
+}
+const LoginForm:FC<Props> = ({ onSubmit,loading }) => {
     return (
         <Box flex='1' display='flex' flexDirection='column'>
-            <Input variant='flushed' placeholder='Email' padding='21px 18px 21px 18px' type='email'
-                   fontWeight='500'
-                   fontSize='14px'
-                   lineHeight='18px'
-                   height='60px'
-                   letterSpacing='-0.02em'
-                   color='#B6ABAE'/>
-            <Input variant='flushed' placeholder='Password' padding='21px 18px 21px 18px' type='password'
-                   fontWeight='500'
-                   fontSize='14px'
-                   lineHeight='18px'
-                   letterSpacing='-0.02em'
-                   height='60px'
-                   color='#B6ABAE'/>
-            <Box padding='25px 18px 25px 18px'>
-                <Button width='100%'>Войти</Button>
+            <InputField name={LOGIN_FIELDS.USERNAME} label={''} placeholder='Password' type='email' context={LoginFormContext}/>
+            <InputField name={LOGIN_FIELDS.PASSWORD} label={''} placeholder='Email' type='password' context={LoginFormContext}/>
+            <Box padding='25px 18px 25px 18px' onClick={() => onSubmit()}>
+                <Button width='100%' isLoading={loading}>Войти</Button>
             </Box>
 
         </Box>

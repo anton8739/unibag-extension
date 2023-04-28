@@ -1,6 +1,7 @@
 import React from 'react';
 import BasketStore from "./basket.store";
 import AppStore from "./app.store";
+import UserStore from "./user.store";
 
 
 
@@ -9,9 +10,11 @@ import AppStore from "./app.store";
 class RootStore {
     basketStore;
     appStore;
+    userStore;
     constructor() {
         this.basketStore = new BasketStore(this);
         this.appStore = new AppStore(this);
+        this.userStore = new UserStore(this);
     }
 }
 
@@ -28,4 +31,8 @@ export const useBasketStore = () => {
 export const useAppStore = () => {
     const { appStore } = useStores();
     return appStore;
+};
+export const useUserStore = () => {
+    const { userStore } = useStores();
+    return userStore;
 };
