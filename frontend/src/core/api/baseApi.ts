@@ -1,13 +1,21 @@
 import axios from 'axios';
-
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 const client = axios.create({
-    baseURL: `http://193.233.48.44:8000/`,
-    withCredentials: true,
+    baseURL: `https://6df8-2a05-541-100-48-00-1.ngrok-free.app/`,
+    withCredentials: false,
     headers: {
-        "Access-Control-Allow-Origin": "*"
+        'Content-Type': 'application/json',
     }
 });
-
+client.interceptors.request.use(async (config) => {
+    config.headers.accept = `application/json`;
+    const result = await chrome.storage.local.get(["token"])
+    if (result.token) {
+        config.headers.authorization = `Token ${result.token}`;
+    }
+    return config;
+});
 class BaseApi {
     http;
 

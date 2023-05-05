@@ -2,7 +2,8 @@ import React from 'react';
 import {Box,Text} from "@chakra-ui/react";
 import BackIcon from "../../common/Icons/BackIcon";
 import {useAppStore} from "../../../core/stores";
-import {Screens} from "../../../constants/parseProductTemplates";
+import {Screens} from "../../../constants/screens";
+import CloseIcon from "../../common/Icons/CloseIcon";
 
 const AuthHeader = () => {
     const {setAppOpened,switchScreen,activeScreen} = useAppStore();
@@ -14,8 +15,8 @@ const AuthHeader = () => {
              background='#FFFFFF'
              borderBottom='1px solid #F2F2F2'
              height='60px'>
-            <Box onClick={() => switchScreen(Screens.BASKET)} cursor='pointer'>
-                <BackIcon/>
+            <Box onClick={() => setAppOpened(false)} cursor='pointer'>
+                <CloseIcon/>
             </Box>
             <Box flex='1' display='flex' gap='5px' justifyContent='center'>
                 <Text cursor='pointer' onClick={() => switchScreen(Screens.LOGIN)} color={activeScreen ===Screens.LOGIN ? "#453939" : "#B6ABAE"}>Войти</Text>

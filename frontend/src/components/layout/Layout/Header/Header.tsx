@@ -5,7 +5,8 @@ import CloseIcon from "../../../common/Icons/CloseIcon";
 import UserIcon from "../../../common/Icons/UserIcon";
 import {observer} from "mobx-react-lite";
 import {useAppStore} from "../../../../core/stores";
-import {Screens} from "../../../../constants/parseProductTemplates";
+import {Screens} from "../../../../constants/screens";
+import UserMenu from "./UserMenu/UserMenu";
 interface Props {
 }
 const Header:FC<Props> = () => {
@@ -26,12 +27,10 @@ const Header:FC<Props> = () => {
                 <Image src={logo} alt='logo' width='97px' display='flex' alignItems='center'/>
             </Box>
             <Box display='flex' gap='15px' alignItems='center'>
-                <Box cursor='pointer'>
+                {/*  <Box cursor='pointer'>
                     <BellIcon/>
-                </Box>
-                <Box cursor='pointer' onClick={() => switchScreen(Screens.LOGIN)}>
-                    <UserIcon/>
-                </Box>
+                </Box> */}
+               <UserMenu/>
                 <Box cursor='pointer' onClick={() => closeApp()}>
                     <CloseIcon/>
                 </Box>

@@ -1,25 +1,19 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Box, Button, Input} from "@chakra-ui/react";
-
-const RegistrationForm = () => {
+import InputField from "../../../../common/fields/InputField/InputField";
+import {LOGIN_FIELDS, REGISTRATION_FIELDS} from "../../../../../constants/formFields";
+import {LoginFormContext, RegistrationFormContext} from "../../../../../context";
+interface Props {
+    onSubmit: Function;
+    loading: boolean;
+}
+const RegistrationForm:FC<Props> = ({ onSubmit,loading }) => {
     return (
-        <Box flex='1' display='flex' flexDirection='column'>
-            <Input variant='flushed' placeholder='Email' padding='21px 18px 21px 18px' type='email'
-                   fontWeight='500'
-                   fontSize='14px'
-                   lineHeight='18px'
-                   height='60px'
-                   letterSpacing='-0.02em'
-                   color='#B6ABAE'/>
-            <Input variant='flushed' placeholder='Password' padding='21px 18px 21px 18px' type='password'
-                   fontWeight='500'
-                   fontSize='14px'
-                   lineHeight='18px'
-                   letterSpacing='-0.02em'
-                   height='60px'
-                   color='#B6ABAE'/>
-            <Box padding='25px 18px 25px 18px'>
-                <Button width='100%'>Создать аккаунт</Button>
+        <Box flex='1' display='flex' flexDirection='column' padding='0px 18px 0px 18px'>
+            <InputField name={REGISTRATION_FIELDS.USERNAME} label={''} placeholder='Password' type='email' context={RegistrationFormContext}/>
+            <InputField name={REGISTRATION_FIELDS.PASSWORD} label={''} placeholder='Email' type='password' context={RegistrationFormContext}/>
+            <Box padding='25px 0px 25px 0px'>
+                <Button width='100%' onClick={() => onSubmit()} isLoading={loading}>Создать аккаунт</Button>
             </Box>
 
         </Box>

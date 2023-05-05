@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {Box,Text} from "@chakra-ui/react";
 import BackIcon from "../../common/Icons/BackIcon";
 import {useAppStore} from "../../../core/stores";
-import {Screens} from "../../../constants/parseProductTemplates";
+import {Screens} from "../../../constants/screens";
 import MenuIcon from "../../common/Icons/MenuIcon";
 interface Props {
     brand: string;
@@ -22,9 +22,9 @@ const ProductHeader:FC<Props> = ({brand}) => {
             <Box flex='1' display='flex' gap='5px' justifyContent='center'>
                 <Text cursor='pointer' color='#B6ABAE'>{brand}</Text>
             </Box>
-            <Box>
+            {/* <Box>
                 <MenuIcon/>
-            </Box>
+            </Box> */}
         </Box>
     );
 }

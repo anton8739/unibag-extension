@@ -1,49 +1,37 @@
-import {parseTemplates} from "../constants/parseProductTemplates";
 import {ProductI} from "../types";
-export const parseProduct = (url:string) => {
-    const template = url.split('/')[2]
-    const foundedTemplate = parseTemplates[template];
-    if (foundedTemplate) {
+export const parseProduct = (selectors:any, url: string) => {
+    if (selectors) {
         let product:ProductI = {
             link: url,
-            title: "",
+            name: "",
             brand: "",
             price: "",
             images: [],
         };
-        Object.keys(foundedTemplate).forEach((key:string) => {
-            let attr;
-            let value;
-            switch (key) {
-                case 'images':
-                    attr = foundedTemplate[key].attr;
-                    value = foundedTemplate[key].value;
-                    const els = document.querySelectorAll(`[${attr}^="${value}"]`)
-                    const images:any[] = []
-                    els.forEach(el => {
-                        images.push(el.getAttribute('src'))
-                    })
-                    if (images.length > 0) {
+        Object.keys(product).forEach(key => {
+            if (key === 'images') {
+                const el = document.querySelectorAll(`${selectors['image']}`)
+                el.forEach(item => {
+                    console.log(item)
+                    if (item.getAttribute('src')) {
                         // @ts-ignore
-                        product[key] = images;
+                        product[key] = [...product[key], item.getAttribute('src')];
                     }
-                    break;
-                default:
-                    attr = foundedTemplate[key].attr;
-                    value = foundedTemplate[key].value;
-                    const el = document.querySelector(`[${attr}^="${value}"]`)
-                    console.log(el)
-                    console.log(document.querySelector(`body`))
-                    if (el?.innerHTML) {
-                        // @ts-ignore
-                        product[key] = el?.innerHTML;
-                    }
+                })
+            } else {
+                const el = document.querySelector(`${selectors[key]}`)
+                if (el?.innerHTML) {
+                    // @ts-ignore
+                    product[key] = el?.innerHTML;
+                }
             }
-
         })
-        if (product.title && product.price) {
+        if(product.name && product.price) {
             return product;
+        } else {
+            return null;
         }
+    } else {
+        return null;
     }
-    return null;
 }

@@ -6,7 +6,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.lamoda.by/*"
+        "*://*.lamoda.by/*",
+        "*://*.lamoda.ru/*"
       ],
       "js": [
         "content.js"

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {makeAutoObservable, runInAction} from 'mobx';
-import {Screens} from "../../constants/parseProductTemplates";
+import {Screens} from "../../constants/screens";
 import {useState} from "react";
 
 export default class AppStore {

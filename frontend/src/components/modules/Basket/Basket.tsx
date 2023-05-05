@@ -11,9 +11,11 @@ const Basket = () => {
     return (
         <Layout>
             {detectedProduct && <NewProductDetectedPanel/>}
-            {basket.products.length > 0 ? <Box display='grid' gridTemplateColumns='1fr 1fr 1fr'>
+            {basket.products.length > 0 ? <div className='unibag-basket' style={{
+                display:'grid', gridTemplateColumns:'1fr 1fr 1fr', maxHeight:'65vh', overflow:'auto'
+            }} >
                 {basket.products.map(product => <ProductCard product={product}/>)}
-            </Box> : <Box display='flex' flex='1' justifyContent='center' alignItems='center'>Корзина пуста</Box>}
+            </div> : <Box display='flex' flex='1' justifyContent='center' alignItems='center'>Корзина пуста</Box>}
         </Layout>
     );
 }

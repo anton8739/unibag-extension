@@ -29,7 +29,7 @@ const SingleProduct = () => {
                                  letterSpacing='-0.02em'
                                  color='#B6ABAE'>
                                 <Box>{openedProduct.brand}</Box>
-                                <Box>{openedProduct.title}</Box>
+                                <Box>{openedProduct.name}</Box>
                             </Box>
                             <Box fontWeight='510'
                                  fontSize='21px'

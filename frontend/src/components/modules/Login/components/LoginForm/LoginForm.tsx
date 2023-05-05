@@ -9,10 +9,10 @@ interface Props {
 }
 const LoginForm:FC<Props> = ({ onSubmit,loading }) => {
     return (
-        <Box flex='1' display='flex' flexDirection='column'>
+        <Box flex='1' display='flex' flexDirection='column' padding='0px 18px 0px 18px'>
             <InputField name={LOGIN_FIELDS.USERNAME} label={''} placeholder='Password' type='email' context={LoginFormContext}/>
             <InputField name={LOGIN_FIELDS.PASSWORD} label={''} placeholder='Email' type='password' context={LoginFormContext}/>
-            <Box padding='25px 18px 25px 18px' onClick={() => onSubmit()}>
+            <Box padding='25px 0px 25px 0px' onClick={() => onSubmit()}>
                 <Button width='100%' isLoading={loading}>Войти</Button>
             </Box>
 

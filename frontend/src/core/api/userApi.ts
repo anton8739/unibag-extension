@@ -9,13 +9,14 @@ class UserApi {
     }
 
     login = async (data: {username:string; password:string;}) => {
-        const response = await this.client.post('/auth-token/', data);
-        if (response.isError) {
-            console.log("error")
-        } else {
-            console.log(response)
-        }
+        return  await this.client.post('/auth-token/', data);
     };
+    registration = async (data: {username:string; password:string;}) => {
+        return   await this.client.post('/api/users/register/', data);
+    };
+    me = async  () => {
+        return   await this.client.get('/api/users/me/');
+    }
 }
 
 export default new UserApi(BaseApi);

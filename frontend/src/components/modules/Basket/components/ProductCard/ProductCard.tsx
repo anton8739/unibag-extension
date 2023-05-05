@@ -4,7 +4,7 @@ import {Box, Image} from "@chakra-ui/react";
 import {ProductI} from "../../../../../types";
 import CloseIcon from "../../../../common/Icons/CloseIcon";
 import {useAppStore, useBasketStore} from "../../../../../core/stores";
-import {Screens} from "../../../../../constants/parseProductTemplates";
+import {Screens} from "../../../../../constants/screens";
 
 interface Props {
     product: ProductI
@@ -24,7 +24,7 @@ const ProductCard: FC<Props> = ({product}) => {
     return (
         <Box display='flex' flexDirection='column' overflow='hidden' cursor='pointer' onClick={openProduct}>
             <Box position='relative'>
-                <Image src={product.images[0]}/>
+                <Image src={product.images[0]} height='100%'/>
                 <Box position='absolute' top='10px' right='10px' onClick={deleteProduct}>
                     <CloseIcon/>
                 </Box>
@@ -57,7 +57,7 @@ const ProductCard: FC<Props> = ({product}) => {
                      whiteSpace='nowrap'
                      overflow='hidden'
                      textOverflow='ellipsis'>
-                    {product.title}
+                    {product.name}
                 </Box>
             </Box>
 

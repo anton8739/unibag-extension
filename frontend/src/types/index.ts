@@ -21,13 +21,16 @@ export interface BasketI {
     products: ProductI[]
 }
 export interface ProductI {
+    id?: number;
     link: string;
-    title: string;
+    name: string;
     brand: string;
     price: string;
     images: string[];
 }
-
+export interface UserI {
+    username:string;
+}
 export type FormContextType = Context<UseFormReturn | null>;
 export type UseFormReturn<TFieldValues extends FieldValues = FieldValues, TContext = any> = {
     watch: UseFormWatch<TFieldValues>;

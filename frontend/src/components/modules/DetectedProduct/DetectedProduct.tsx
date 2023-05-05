@@ -4,8 +4,7 @@ import {Carousel} from 'react-responsive-carousel'
 import {observer} from "mobx-react-lite";
 import {useAppStore, useBasketStore} from "../../../core/stores";
 import Layout from "../../layout/Layout/Layout";
-import OpenBasket from "../../common/OpenBasketPanel/OpenBasketPanel";
-import {Screens} from "../../../constants/parseProductTemplates";
+import {Screens} from "../../../constants/screens";
 
 const DetectedProduct = () => {
     const {switchScreen} = useAppStore();
@@ -19,7 +18,6 @@ const DetectedProduct = () => {
     }
     return (
         <Layout>
-            <OpenBasket/>
             {detectedProduct ? <Box display='flex' flexDirection='column'>
                     <Carousel showArrows={true} swipeable showThumbs={false}>
                         {
@@ -36,7 +34,7 @@ const DetectedProduct = () => {
                                  letterSpacing='-0.02em'
                                  color='#B6ABAE'>
                                 <Box>{detectedProduct.brand}</Box>
-                                <Box>{detectedProduct.title}</Box>
+                                <Box>{detectedProduct.name}</Box>
                             </Box>
                             <Box fontWeight='510'
                                  fontSize='21px'

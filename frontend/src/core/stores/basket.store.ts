@@ -1,6 +1,9 @@
 /* eslint-disable max-len */
 import {makeAutoObservable, runInAction} from 'mobx';
 import {BasketI, ProductI} from "../../types";
+import {BasketApi} from "../api";
+import {Screens} from "../../constants/screens";
+import basketApi from "../api/basketApi";
 
 export default class BasketStore {
     rootStore;
@@ -17,12 +20,7 @@ export default class BasketStore {
     get isDetectedProductInBasket() {
         return !!this.basket.products.find(product => product.link === this.detectedProduct?.link)
     }
-    addProductToBasket = async (product: ProductI) => {
-        runInAction(() => {
-            this.basket.products.push(product)
-            localStorage.setItem('basket', JSON.stringify(this.basket));
-        })
-    }
+
     setDetectedProduct = async (product: ProductI | null) => {
 
         runInAction(() => {
@@ -35,16 +33,48 @@ export default class BasketStore {
         })
     }
     removeProductFromBasket = async (product: ProductI) => {
-        runInAction(() => {
-            this.basket = {...this.basket, products: this.basket.products.filter(item => item.link !== product.link)}
-            localStorage.setItem('basket', JSON.stringify(this.basket));
-        })
+        console.log(product)
+        const response = await BasketApi.removeProduct(product);
+        if (response.isError) {
+            console.log("error")
+        } else {
+            runInAction(() => {
+                this.basket = {...this.basket, products: this.basket.products.filter(item => item.link !== product.link)}
+            })
+        }
     }
-    initBasket = async  (basket: BasketI | undefined) => {
-        runInAction(() => {
-            if (basket) {
-                this.basket = basket
-            }
-        })
+    getParseSelectors = async (origin: string) => {
+        const response = await BasketApi.getSelectors({origin});
+        if (response.isError) {
+            console.log("error")
+            return null;
+        } else {
+            return response.data
+        }
+    }
+    initBasket = async  () => {
+        const response = await BasketApi.getAllProducts();
+        if (response.isError) {
+            console.log("error")
+        } else {
+            runInAction(() => {
+                this.basket = {
+                    products: response.data
+                }
+            })
+
+        }
+    }
+    addProductToBasket = async (product: ProductI) => {
+        const response = await basketApi.addProduct(product);
+        if (response.isError) {
+            console.log("error")
+        } else {
+            const productList = [...this.basket.products]
+            productList.push(response.data)
+            runInAction(() => {
+                this.basket = {...this.basket, products: productList}
+            })
+        }
     }
 }

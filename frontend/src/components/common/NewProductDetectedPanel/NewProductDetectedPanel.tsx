@@ -2,7 +2,7 @@ import React from 'react';
 import {observer} from "mobx-react-lite";
 import {Box, Button,Text} from "@chakra-ui/react";
 import {useAppStore, useBasketStore} from "../../../core/stores";
-import {Screens} from "../../../constants/parseProductTemplates";
+import {Screens} from "../../../constants/screens";
 
 const NewProductDetectedPanel = () => {
     const {switchScreen} = useAppStore();
