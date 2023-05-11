@@ -62,6 +62,13 @@ function App() {
 
         }
         initApp()
+        chrome.runtime.onMessage.addListener(
+            function(request, sender, sendResponse) {
+                console.log("recieved")
+                if (request.message === 'open-app') {
+                    setAppOpened(!appOpened)
+                }
+            });
     }, [])
     return (
         <>
