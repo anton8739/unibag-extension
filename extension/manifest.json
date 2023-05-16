@@ -11,7 +11,10 @@
         "*://*.ozon.ru/*",
         "*://*.ozon.by/*",
         "*://*.wildberries.by/*",
-        "*://*.wildberries.ru/*"
+        "*://*.wildberries.ru/*",
+        "*://*.aliexpress.ru/*",
+        "*://*.market.yandex.ru/*",
+        "*://*.market.yandex.by/*"
       ],
       "js": [
         "content.js"

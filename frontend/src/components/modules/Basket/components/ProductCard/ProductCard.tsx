@@ -24,7 +24,7 @@ const ProductCard: FC<Props> = ({product}) => {
     return (
         <Box display='flex' flexDirection='column' overflow='hidden' cursor='pointer' onClick={openProduct}>
             <Box position='relative'>
-                <Image src={product.images[0]} height='100%'/>
+                <Image src={product.images[0]} height='180px' objectFit='cover'/>
                 <Box position='absolute' top='10px' right='10px' onClick={deleteProduct}>
                     <CloseIcon/>
                 </Box>
