@@ -12,7 +12,6 @@ chrome.tabs.onUpdated.addListener(
 );
 chrome.action.onClicked.addListener(
     function(tab) {
-        console.log("clicked")
         chrome.tabs.sendMessage( tab.id, {
             message: 'open-app',
         })
