@@ -21,7 +21,7 @@ export const parseProduct = (selectors:any, url: string) => {
                 let el = document.querySelector(`${selectors['discount_price']}`)
                 if (el?.innerHTML) {
                     // @ts-ignore
-                    product['discount_price'] = el?.innerHTML;
+                    product['price'] = el?.innerHTML;
                 } else {
                     el = document.querySelector(`${selectors['price']}`)
                     if (el?.innerHTML) {
